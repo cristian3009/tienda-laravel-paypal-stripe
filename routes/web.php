@@ -20,5 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/create', Create::class)->name('products.create');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+Route::get('/create', Create::class)
+    ->name('products.create')->middleware('auth', 'admin');
