@@ -25,7 +25,7 @@ class Create extends Component
             'thumbnail' => ['required', 'image', 'max:1024']
         ]);
 
-        $validate['thumbnail'] = $this->thumbnail->store('images');
+        $validate['thumbnail'] = $this->thumbnail->store('public/images');
         Product::create($validate);
 
         return redirect('/');
