@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Products\Create;
+use App\Http\Livewire\Products\Show;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +23,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
+
 Route::get('/create', Create::class)
     ->name('products.create')->middleware('auth', 'admin');
+
+Route::get('/products/{product}', Show::class)
+    ->name('products.show');

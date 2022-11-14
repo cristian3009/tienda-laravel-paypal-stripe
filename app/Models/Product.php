@@ -17,6 +17,11 @@ class Product extends Model
         'thumbnail'
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     protected static function booted()
     {
         static::creating(function ($product) {
