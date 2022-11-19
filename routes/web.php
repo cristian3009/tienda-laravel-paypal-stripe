@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Products\Create;
 use App\Http\Livewire\Products\Show;
 use App\Http\Livewire\Checkout;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Livewire\Checkout;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Auth::routes();
 
@@ -34,4 +35,12 @@ Route::get('/products/{product}', Show::class)
 
 Route::get('/checkout', Checkout::class)
     ->name('checkout')
+    ->middleware('check');
+
+Route::get('/paypal/payment', [PaymentController::class, 'paypalPaymentRequest'])
+    ->name('paypal.payment')
+    ->middleware('check');
+
+Route::get('/paypal/checkout/{status}', [PaymentController::class, 'paypalCheckout'])
+    ->name('paypal.checkout')
     ->middleware('check');
