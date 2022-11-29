@@ -13,11 +13,12 @@ class ConfirmationShopping extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Order $order;
+    public $order, $url;
 
-    public function __construct(Order $order)
+    public function __construct($order, $url)
     {
         $this->order = $order;
+        $this->url = $url;
     }
 
     public function envelope()

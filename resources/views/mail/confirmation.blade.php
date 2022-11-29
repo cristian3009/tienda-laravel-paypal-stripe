@@ -25,3 +25,8 @@
     </tr>
     </tbody>
 </table>
+
+@isset($url)
+    <h2>Para completar tu order, completa el siguiente formulario</h2>
+    <a href="{{ $url }}">Formulario</a>
+@endisset

@@ -5,6 +5,7 @@ use App\Http\Livewire\Products\Create;
 use App\Http\Livewire\Products\Show;
 use App\Http\Livewire\Checkout;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CompleteOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,12 @@ Route::get('/paypal/payment', [PaymentController::class, 'paypalPaymentRequest']
 Route::get('/paypal/checkout/{status}', [PaymentController::class, 'paypalCheckout'])
     ->name('paypal.checkout')
     ->middleware('check');
+
+Route::post('/stripe/checkout', [PaymentController::class, 'stripeCheckout'])
+    ->name('stripe.checkout');
+
+Route::get('/order/complete/{order}', [CompleteOrderController::class, 'completeForm'])
+    ->name('order.complete');
+Route::post('/order/{order}', [CompleteOrderController::class, 'completeOrder'])
+    ->name('complete');
+

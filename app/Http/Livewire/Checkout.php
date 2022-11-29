@@ -7,10 +7,11 @@ use App\Models\CartManager;
 
 class Checkout extends Component
 {
-    public $cart;
+    public $cart, $stripeKey;
 
     public function mount(CartManager $cart)
     {
+        $this->stripeKey = config('services.stripe.key');
         $this->cart = $cart->getCart();
     }
     public function render()

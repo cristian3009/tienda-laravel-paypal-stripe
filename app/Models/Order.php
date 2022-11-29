@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class Order extends Model
 {
@@ -45,11 +46,25 @@ class Order extends Model
         return Order::create($params);
     }
 
+    public function isFromStripe(): bool
+    {
+        return $this->name == null ? true : false;
+    }
+
     protected static function booted()
     {
         static::saving(function ($order) {
             (app(CartManager::class))->deleteSession();
-            Mail::to($order->email)->send(new ConfirmationShopping($order));
+            if(!$order->isFromStripe()){
+                Mail::to($order->email)->send(new ConfirmationShopping($order));
+            }
+        });
+
+        static::created(function ($order) {
+            if($order->isFromStripe()) {
+                $url = URL::signedRoute('order.complete', ['order' => $order->id]);
+                Mail::to($order->email)->send(new ConfirmationShopping($order, $url));
+            }
         });
     }
 }
